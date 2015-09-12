@@ -1,6 +1,6 @@
 package racoonbot.app
 
-import org.json4s.{JValue, DefaultFormats, Formats}
+import org.json4s.{DefaultFormats, Formats, JValue}
 import org.scalatra.json.JacksonJsonSupport
 import org.slf4j.LoggerFactory
 
@@ -21,8 +21,10 @@ class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
   get("/")("It works!")
 
   post("/133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU") {
-    logger.info("Incoming request: " + request.body)
-    <html><body>lorem ipsum<br/></body></html>
+    logger.info("Incoming request: " + parsedBody)
+    val apiRequest = new ApiRequest
+    val id = (parsedBody \ "id").toString
+    apiRequest.sendMessage(id, "Hi")
   }
 
 }
