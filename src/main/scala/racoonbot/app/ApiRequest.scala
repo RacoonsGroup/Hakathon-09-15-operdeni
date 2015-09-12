@@ -6,7 +6,7 @@ import scalaj.http.{HttpRequest, HttpResponse, Http}
 
 
 object ApiRequest {
-  val API_URL = "https://api.telegram.org/bot133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU/"
+  final val API_URL = "https://api.telegram.org/bot133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU/"
   val logger =  LoggerFactory.getLogger(getClass)
   
   def perform(method: String, args: Map[String,String]): Unit = {
