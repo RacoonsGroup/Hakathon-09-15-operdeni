@@ -4,6 +4,7 @@ import org.json4s.{JValue, DefaultFormats, Formats}
 import org.scalatra.json.JacksonJsonSupport
 import org.slf4j.LoggerFactory
 
+case class User(id: Int, firstName: String)
 
 class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
 
@@ -20,8 +21,8 @@ class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
   get("/")("It works!")
 
   post("/133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU") {
-    logger.info("Incoming request: " + request.body.toString)
-    <html><body>lorem ipsum</body></html>
+    logger.info("Incoming request: " + request.body)
+    <html><body>lorem ipsum<br/></body></html>
   }
 
 }
