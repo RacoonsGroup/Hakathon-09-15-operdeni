@@ -23,8 +23,7 @@ object WeatherApiRequest {
   }
 
   def wind(json: JValue) = {
-    "Ветер " + windDirection(compact(json \ "wind" \ "deg").replaceAll("\"","").toDouble.toInt)
-      + ", скорость " + compact(json \ "wind" \ "speed").replaceAll("\"","") + " метров в секунду"
+    "Ветер " + windDirection(compact(json \ "wind" \ "deg").replaceAll("\"","").toDouble.toInt) + ", скорость " + compact(json \ "wind" \ "speed").replaceAll("\"","") + " метров в секунду"
   }
 
   def windDirection(degrees: Int) = {
