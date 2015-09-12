@@ -23,9 +23,9 @@ class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
   post("/133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU") {
     logger.info("Incoming request: " + parsedBody)
     val apiRequest = new ApiRequest
-    val id = (parsedBody \ "message" \ "chat" \ "id").toString
+    val id = compact(parsedBody \ "message" \ "chat" \ "id")
     logger.info("==============================================================")
-    logger.info("chat id: " + id)
+    logger.info("chat id: " + id.toString)
     apiRequest.sendMessage(id, "Hi")
   }
 
