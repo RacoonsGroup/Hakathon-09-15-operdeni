@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import scalaj.http.{HttpRequest, HttpResponse, Http}
 
 
-class ApiRequest {
+object ApiRequest {
   val API_URL = "https://api.telegram.org/bot133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU/"
   val logger =  LoggerFactory.getLogger(getClass)
   
