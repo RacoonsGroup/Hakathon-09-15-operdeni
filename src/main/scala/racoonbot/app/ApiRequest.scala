@@ -2,7 +2,7 @@ package racoonbot.app
 
 import org.slf4j.LoggerFactory
 
-import scalaj.http.{HttpResponse, Http}
+import scalaj.http.{HttpRequest, HttpResponse, Http}
 
 
 class ApiRequest {
@@ -15,7 +15,9 @@ class ApiRequest {
   }
 
   def sendMessage(chatId: String, text: String): Unit = {
-    val response: HttpResponse[String] = Http(API_URL + "sendMessage").param("chat_id", chatId.toString).param("text", text).asString
+    val request: HttpRequest = Http(API_URL + "sendMessage").param("chat_id", chatId.toString).param("text", text)
+    logger.info("Outgoing request to Telegram API: " + request.toString)
+    val response: HttpResponse[String] = request.asString
     logger.info("Telegram response: " + response.toString)
   }
 }
