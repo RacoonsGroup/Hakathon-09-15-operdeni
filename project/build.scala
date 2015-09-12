@@ -15,7 +15,8 @@ object RacoonbotBuild extends Build {
   lazy val project = Project (
     "racoonbot",
     file("."),
-    settings = ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
+    settings = seq(com.typesafe.sbt.SbtStartScript.startScriptForClassesSettings: _*
+      ) ++ ScalatraPlugin.scalatraSettings ++ scalateSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
@@ -27,8 +28,8 @@ object RacoonbotBuild extends Build {
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
-        "org.eclipse.jetty" % "jetty-webapp" % "9.2.10.v20150310" % "container",
-        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
+        "org.eclipse.jetty" % "jetty-webapp" % "9.2.10.v20150310" % "compile;container",
+        "javax.servlet" % "javax.servlet-api" % "3.1.0" % "compile;provided"
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
