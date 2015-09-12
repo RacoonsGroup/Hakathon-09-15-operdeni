@@ -3,7 +3,6 @@ import com.mojolly.scalate.ScalatePlugin._
 import org.scalatra.sbt._
 import sbt.Keys._
 import sbt._
-import play.api.libs.json._
 
 object RacoonbotBuild extends Build {
   val Organization = "operdeni"
