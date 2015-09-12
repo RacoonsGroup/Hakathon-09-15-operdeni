@@ -9,7 +9,7 @@ object WeatherApiRequest {
   val API_URL = "http://api.openweathermap.org/data/2.5/weather"
   val logger = LoggerFactory.getLogger(getClass)
   
-  def sendWeatherIn(city: String, chatId): Unit = {
+  def sendWeatherIn(city: String, chatId: String): Unit = {
     ApiRequest.sendMessage(chatId, "Укажите город")    
   }
   
