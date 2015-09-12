@@ -25,12 +25,19 @@ object RacoonbotBuild extends Build {
       libraryDependencies ++= Seq(
         "org.scalatra" %% "scalatra" % ScalatraVersion,
         "org.scalatra" %% "scalatra-scalate" % ScalatraVersion,
+        "org.eclipse.jetty" % "jetty-client" % "9.2.10.v20150310",
         "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
         "ch.qos.logback" % "logback-classic" % "1.1.2" % "runtime",
         "org.eclipse.jetty" % "jetty-webapp" % "9.2.10.v20150310" % "compile;container",
         "javax.servlet" % "javax.servlet-api" % "3.1.0" % "compile;provided",
-        "org.scalatra" %% "scalatra-json" % "2.4.0.RC1",
+        "org.scalatra" %% "scalatra-json" % ScalatraVersion,
         "org.json4s"   %% "json4s-jackson" % "3.3.0.RC1"
+      ),
+      dependencyOverrides := Set(
+        "org.scala-lang" % "scala-library" % ScalaVersion,
+        "org.scala-lang" % "scala-reflect" % ScalaVersion,
+
+        "org.scala-lang" % "scala-compiler" % ScalaVersion
       ),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
