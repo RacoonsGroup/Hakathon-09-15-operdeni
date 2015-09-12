@@ -4,8 +4,6 @@ import org.json4s.{DefaultFormats, Formats, JValue}
 import org.scalatra.json.JacksonJsonSupport
 import org.slf4j.LoggerFactory
 
-case class User(id: Int, firstName: String)
-
 class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
 
   protected implicit lazy val jsonFormats: Formats = DefaultFormats
@@ -22,11 +20,8 @@ class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
 
   post("/133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU") {
     logger.info("Incoming request: " + parsedBody)
-    val apiRequest = new ApiRequest
-    val id = compact(parsedBody \ "message" \ "chat" \ "id")
-    logger.info("\n==============================================================\n")
-    logger.info("chat id: " + id.toString)
-    apiRequest.sendMessage(id, "Hi")
+    val parser = new MessageParser
+    parser.parse(parsedBody)
   }
 
 }
