@@ -37,8 +37,7 @@ class CommandService(val body: JValue) {
       if (city == "Простоквашино") {
         ApiRequest.sendMessage(chatId, "Ожидаются заморозки, переходящие в наводнение. Ожидается землетрясение, переходящее в солнечное затмение. Местами снег, местами град, местами кислый виноград.")
       } else {
-        val temp = WeatherApiRequest.getTempIn(city)
-        ApiRequest.sendMessage(chatId, "Погода в " + city + ", " + temp + " кельвинов" )
+        WeatherApiRequest.showWeatherIn(city, chatId)
       }
     } else {
       ApiRequest.sendMessage(chatId, "Укажите город")
