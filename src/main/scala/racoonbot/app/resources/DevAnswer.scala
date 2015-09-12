@@ -1,7 +1,7 @@
 package racoonbot.app.resources
 
 object DevAnswer {
-  val quotes = Array(
+  final val QUOTES = Array(
   "Извините, мы не можем запретить им делать скриншот сайта",
   "Инет дико тормозил, пришлось отложить",
   "Иногда проще на живом сервере поправить по-быстрому",
@@ -455,6 +455,6 @@ object DevAnswer {
 
   def random(): String = {
     val r = scala.util.Random
-    quotes(r.nextInt(quotes.length))
+    QUOTES(r.nextInt(QUOTES.length))
   }
 }

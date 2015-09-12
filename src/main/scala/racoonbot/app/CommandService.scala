@@ -21,6 +21,7 @@ class CommandService(val body: JValue) {
         case "/moo" => moo(chatId)
         case "/devanswer" => devAnswer(chatId)
         case "/quote" => randomQuote(chatId)
+        case "/dice" => rollDice(body, chatId)
         case _ => logger.info("Command not found.")
       }
 
@@ -59,5 +60,37 @@ class CommandService(val body: JValue) {
   def randomQuote(chatId: String): Unit = {
     val quote = ForismaticApiRequest.getRandomQuote
     ApiRequest.sendMessage(chatId, quote)
+  }
+
+  def roll(): Int  = scala.util.Random.nextInt(6) + 1
+
+  def rollDice(body: JValue, chatId: String): Unit = {
+    logger.info("Parsing dice number...")
+    try {
+      val diceNum = compact(body \ "message" \ "text").split(" ")(1).replaceAll("\"", "").toInt
+      val user = (compact(body \ "message" \ "from" \ "firstName") + " " + compact(body \ "message" \ "from" \ "lastName")).replaceAll("\"", "")
+      var text = ""
+      if (diceNum <= 0) {
+        text = "Нечего бросать."
+      } else if (diceNum >= 5) {
+        text = "Слишком много кубиков."
+      } else {
+        var i = 0
+        var overall = 0
+        text = user + " бросает " + diceNum + " " + (if (diceNum == 1) "кубик" else "кубика") + ": "
+        for( i <- 1 to diceNum) {
+          val result = roll()
+          text += result.toString + " "
+          overall += result
+        }
+        if(diceNum > 1) text += "\nОбщий результат: " + overall.toString
+      }
+      ApiRequest.sendMessage(chatId, text)
+    } catch {
+      case e: Exception =>
+        logger.error("There was an error while parsing message body: " + e.printStackTrace())
+        ApiRequest.sendMessage(chatId, "Нечего бросать.");
+    }
+
   }
 }
