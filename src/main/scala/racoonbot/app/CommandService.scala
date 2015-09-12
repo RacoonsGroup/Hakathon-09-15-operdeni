@@ -10,7 +10,7 @@ class CommandService(val body: JValue) {
   def run() {
     logger.info("Checking message for command presence...")
     try {
-      val command = compact(body \ "message" \ "text").split(" ")(0).replace("\"","") // cut arguments and leading "
+      val command = compact(body \ "message" \ "text").split(" ")(0).replaceAll("\"", "") // cut arguments and leading "
       val chatId = compact(body \ "message" \ "chat" \ "id")
       logger.info("command: " + command)
       command match {
@@ -33,12 +33,12 @@ class CommandService(val body: JValue) {
     val paramsArray = compact(body \ "message" \ "text").split(" ")
     val chatId = compact(body \ "message" \ "chat" \ "id")
     if (paramsArray.length > 1) {
-      val city = paramsArray(1)
+      val city = paramsArray(1).replaceAll("\"", "")
       if (city == "Простоквашино") {
         ApiRequest.sendMessage(chatId, "Ожидаются заморозки, переходящие в наводнение. Ожидается землетрясение, переходящее в солнечное затмение. Местами снег, местами град, местами кислый виноград.")
       } else {
         val temp = WeatherApiRequest.getTempIn(city)
-        ApiRequest.sendMessage(chatId, "Погода в " + city + " ," + temp + " кельвинов" )
+        ApiRequest.sendMessage(chatId, "Погода в " + city + ", " + temp + " кельвинов" )
       }
     } else {
       ApiRequest.sendMessage(chatId, "Укажите город")
