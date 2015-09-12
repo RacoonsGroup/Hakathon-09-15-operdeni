@@ -10,9 +10,9 @@ class CommandService(val body: JValue) {
   def run() {
     logger.info("Checking message for command presence...")
     try {
-      val command = compact(body \ "message" \ "text").split(" ")(0)
+      val command = compact(body \ "message" \ "text").split(" ")(0).substring(1) // cut arguments and leading "
       val chatId = compact(body \ "message" \ "chat" \ "id")
-
+      logger.info("command: " + command)
       command match {
         case "/start" => start(chatId)
         case "/help" => help(chatId)
