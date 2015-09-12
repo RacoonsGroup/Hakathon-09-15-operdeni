@@ -20,6 +20,7 @@ class CommandService(val body: JValue) {
         case "/weather" => weather(body)
         case "/moo" => moo(chatId)
         case "/devanswer" => devAnswer(chatId)
+        case "/quote" => randomQuote(chatId)
         case _ => logger.info("Command not found.")
       }
 
@@ -50,6 +51,11 @@ class CommandService(val body: JValue) {
 
   def devAnswer(chatId: String): Unit = {
     val quote = DevAnswer.random()
+    ApiRequest.sendMessage(chatId, quote)
+  }
+
+  def randomQuote(chatId: String): Unit = {
+    val quote = ForismaticApiRequest.getRandomQuote
     ApiRequest.sendMessage(chatId, quote)
   }
 }
