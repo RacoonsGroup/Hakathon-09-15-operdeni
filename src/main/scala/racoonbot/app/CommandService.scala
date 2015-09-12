@@ -3,6 +3,7 @@ package racoonbot.app
 import org.json4s.JsonAST.JValue
 import org.slf4j.LoggerFactory
 import org.json4s.jackson.JsonMethods._
+import racoonbot.app.resources.DevAnswer
 
 class CommandService(val body: JValue) {
   val logger = LoggerFactory.getLogger(getClass)
@@ -18,6 +19,7 @@ class CommandService(val body: JValue) {
         case "/help" => help(chatId)
         case "/weather" => weather(body)
         case "/moo" => moo(chatId)
+        case "/devanswer" => devAnswer(chatId)
         case _ => logger.info("Command not found.")
       }
 
@@ -45,4 +47,9 @@ class CommandService(val body: JValue) {
   }
 
   def moo(chatId: String) = ApiRequest.sendMessage(chatId,"There are no Easter Eggs in this program.")
+
+  def devAnswer(chatId: String): Unit = {
+    val quote = DevAnswer.random()
+    ApiRequest.sendMessage(chatId, quote)
+  }
 }
