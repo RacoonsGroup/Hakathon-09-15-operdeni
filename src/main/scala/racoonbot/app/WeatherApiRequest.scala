@@ -14,12 +14,12 @@ object WeatherApiRequest {
     if (compact(json \ "cod").replaceAll("\"", "") == "404"){
       ApiRequest.sendMessage(chatId, "Город не найден :'(")
     } else {
-      ApiRequest.sendMessage(chatId, "Температура " + temp(json) + "градусов")
+      ApiRequest.sendMessage(chatId, "Температура " + temp(json) + " градусов")
     }
   }
   
   def temp(json: JValue) = {
-    compact(json \ "main" \ "temp").replaceAll("\"", "")
+    "%1.1f" format (compact(json \ "main" \ "temp").replaceAll("\"", "").toDouble - 273,15)
   }
 
   def getInfoAbout(city: String) = {
