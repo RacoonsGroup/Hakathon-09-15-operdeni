@@ -20,7 +20,8 @@ class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
 
   post("/133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU") {
     logger.info("Incoming request: " + parsedBody)
-    MessageParser.parse(parsedBody)
+    val commandService = new CommandService(parsedBody)
+    commandService.run
   }
 
 }

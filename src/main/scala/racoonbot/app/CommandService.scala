@@ -6,17 +6,14 @@ import org.json4s.jackson.JsonMethods._
 
 class CommandService(val body: JValue) {
   val logger =  LoggerFactory.getLogger(getClass)
+  val chatId = compact(body \ "message" \ "chat" \ "id")
 
-  def start(): Unit = {
-
+  def run = {
+  	help(chatId)
   }
 
-  def help(): Unit = {
-
-  }
-
-  def moo(): Unit = {
-    val chatId = compact(body \ "message" \ "chat" \ "id")
-    ApiRequest.sendMessage(chatId, "There are no Easter Eggs in this program.")
-  }
+  def start(chatId: String) = ApiRequest.sendMessage(chatId,"hi")
+  def help(chatId: String) = ApiRequest.sendMessage(chatId,"Manual for racoonbot")
 }
+
+
