@@ -16,7 +16,11 @@ class MyScalatraServlet extends RacoonbotStack with JacksonJsonSupport {
     contentType = formats("json")
   }
 
-  get("/")("It works!")
+  get("/") {
+    logger.info("GET /")
+    contentType="text/html"
+    jade("index")
+  }
 
   post("/133163653:AAEIPp8IA7xgxh2dqUlWTX3W90RbSS5kJRU") {
     logger.info("Incoming request: " + parsedBody)

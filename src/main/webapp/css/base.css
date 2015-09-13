@@ -1,0 +1,60 @@
+html, body {
+    background:url(../images/tweed.png);
+}
+
+.title {
+    color: #fff;
+    font-size: 2em;
+    position: relative;
+    margin: 0 auto 1em;
+    padding: 1em 1em .25em 1em;
+    text-align: center;
+    text-transform: uppercase;
+}
+.title:after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 240px;
+    height: 4px;
+    margin-left: -120px;
+    content: '';
+    background-color: #fff;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-size__30px {
+    font-size: 30px;
+}
+
+#list {
+    width:320px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#list ol {
+    font-style:italic;
+    font-family:Georgia, Times, serif;
+    font-size:24px;
+    color:#fff;
+}
+#list ol li { }
+#list ol li p {
+    padding:8px;
+    font-style:normal;
+    font-family:Arial;
+    font-size:13px;
+    color:#eee;
+    border-left: 1px solid #999;
+}
+#list ol li p em {
+    display:block;
+    font-size: 24px;
+}
+
+.white {
+    color: #fff;
+}
