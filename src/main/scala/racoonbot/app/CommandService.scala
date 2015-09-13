@@ -4,6 +4,7 @@ import org.json4s.JsonAST.JValue
 import org.slf4j.LoggerFactory
 import org.json4s.jackson.JsonMethods._
 import racoonbot.app.resources.DevAnswer
+import scalaj.http.{HttpRequest, HttpResponse, Http}
 
 class CommandService(val body: JValue) {
   val logger = LoggerFactory.getLogger(getClass)
@@ -22,6 +23,7 @@ class CommandService(val body: JValue) {
         case "/devanswer" => devAnswer(chatId)
         case "/quote" => randomQuote(chatId)
         case "/dice" => rollDice(body, chatId)
+        case "/image" => sendImage(body, chatId)
         case _ => logger.info("Command not found.")
       }
 
@@ -92,5 +94,21 @@ class CommandService(val body: JValue) {
         ApiRequest.sendMessage(chatId, "Нечего бросать.");
     }
 
+  }
+
+  def sendImage(body: JValue, chatId: String) = {
+    val imageName = bodyCommand(body, 1).toString
+    val imageSearch = "https://ajax.googleapis.com/ajax/services/search/images"
+
+    val request: HttpRequest = Http(imageSearch).param("v", "1.0").param("as_filetype", "jpg").param("q", imageName)
+    val result = parse(request.asString.body)
+    logger.info("google response: " + result.toString)
+    val image = Http(compact((result \ "responseData" \ "results")(0) \ "unescapedUrl")).asBytes.body
+    logger.info("image bytecode: " + image.toString)
+    ApiRequest.sendPhoto(chatId, image, "image/jpg", (imageName + ".jpg").toString)
+  }
+
+  def bodyCommand(body: JValue, number: Int) = {
+    compact(body \ "message" \ "text").split(" ")(number).replaceAll("\"", "")
   }
 }
