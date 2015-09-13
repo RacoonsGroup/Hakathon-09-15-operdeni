@@ -21,6 +21,9 @@ html, body {
     content: '';
     background-color: #fff;
 }
+.title a {
+    color: lightblue;
+}
 
 .text-center {
     text-align: center;
