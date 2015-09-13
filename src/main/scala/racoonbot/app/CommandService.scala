@@ -3,7 +3,7 @@ package racoonbot.app
 import org.json4s.JsonAST.JValue
 import org.json4s.jackson.JsonMethods._
 import org.slf4j.LoggerFactory
-import racoonbot.app.resources.DevAnswer
+import racoonbot.app.resources.{Dice, DevAnswer}
 
 import scalaj.http.{Http, HttpRequest}
 
@@ -72,23 +72,23 @@ class CommandService(val body: JValue) {
     try {
       val diceNum = compact(body \ "message" \ "text").split(" ")(1).replaceAll("\"", "").toInt
       val user = (compact(body \ "message" \ "from" \ "firstName") + " " + compact(body \ "message" \ "from" \ "lastName")).replaceAll("\"", "")
-      var text = ""
       if (diceNum <= 0) {
-        text = "Нечего бросать."
+        ApiRequest.sendMessage(chatId, "Нечего бросать.")
       } else if (diceNum >= 5) {
-        text = "Слишком много кубиков."
+        ApiRequest.sendMessage(chatId, "Слишком много кубиков.")
       } else {
         var i = 0
         var overall = 0
-        text = user + " бросает " + diceNum + " " + (if (diceNum == 1) "кубик" else "кубика") + ": "
+        val text = user + " бросает " + diceNum + " " + (if (diceNum == 1) "кубик" else "кубика") + "..."
+        ApiRequest.sendMessage(chatId, text)
         for( i <- 1 to diceNum) {
           val result = roll()
-          text += result.toString + " "
+          ApiRequest.sendPhoto(chatId, Dice.get(result), "image/gif", result.toString + ".gif")
           overall += result
         }
-        if(diceNum > 1) text += "\nОбщий результат: " + overall.toString
+        ApiRequest.sendMessage(chatId, "\n" + user + " выбрасывает: " + overall.toString)
       }
-      ApiRequest.sendMessage(chatId, text)
+
     } catch {
       case e: Exception =>
         logger.error("There was an error while parsing message body: " + e.printStackTrace())
