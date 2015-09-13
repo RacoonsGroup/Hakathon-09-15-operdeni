@@ -103,7 +103,8 @@ class CommandService(val body: JValue) {
     val request: HttpRequest = Http(imageSearch).param("v", "1.0").param("as_filetype", "jpg").param("q", imageName)
     val result = parse(request.asString.body)
     logger.info("google response: " + result.toString)
-    val image = Http(compact((result \ "responseData" \ "results")(0) \ "unescapedUrl")).asBytes.body
+    val imageRequest: HttpRequest = Http(compact((result \ "responseData" \ "results")(0) \ "unescapedUrl"))
+    val image = imageRequest.asBytes.body
     logger.info("image bytecode: " + image.toString)
     ApiRequest.sendPhoto(chatId, image, "image/jpg", (imageName + ".jpg").toString)
   }
