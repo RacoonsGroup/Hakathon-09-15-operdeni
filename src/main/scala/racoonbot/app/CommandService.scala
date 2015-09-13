@@ -99,18 +99,33 @@ class CommandService(val body: JValue) {
 
   def sendImage(body: JValue, chatId: String) = {
     val imageName = bodyCommand(body, 1).toString
-    val imageSearch = "https://ajax.googleapis.com/ajax/services/search/images"
+    if (imageName == "false") {
+      ApiRequest.sendMessage(chatId, "Укажите картинку")
+    } else {
+      val imageSearch = "https://ajax.googleapis.com/ajax/services/search/images"
 
-    val request: HttpRequest = Http(imageSearch).param("v", "1.0").param("as_filetype", "jpg").param("q", imageName)
-    val result = parse(request.asString.body)
-    logger.info("google response: " + result.toString)
-    val imageRequest: HttpRequest = Http(compact((result \ "responseData" \ "results")(0) \ "unescapedUrl").replaceAll("\"", ""))
-    val image = imageRequest.asBytes.body
-    logger.info("image bytecode: " + image.toString)
-    ApiRequest.sendPhoto(chatId, image, "image/jpg", (imageName + ".jpg").toString)
+      val request: HttpRequest = Http(imageSearch).param("v", "1.0").param("as_filetype", "jpg").param("q", imageName)
+      val result = parse(request.asString.body)
+      logger.info("google response: " + result.toString)
+      if (compact(result \ "responseStatus") == "200") {
+        val imageRequest: HttpRequest = Http(compact((result \ "responseData" \ "results")(0) \ "unescapedUrl").replaceAll("\"", ""))
+        val image = imageRequest.asBytes.body
+        logger.info("image bytecode: " + image.toString)
+        ApiRequest.sendPhoto(chatId, image, "image/jpg", (imageName + ".jpg").toString)
+      } else {
+        ApiRequest.sendMessage(chatId, "Ошибка при поиске картинки 😥")
+      }
+
+    }
   }
 
   def bodyCommand(body: JValue, number: Int) = {
-    compact(body \ "message" \ "text").split(" ")(number).replaceAll("\"", "")
+    val array = compact(body \ "message" \ "text").split(" ")
+    if (array.length >= number) {
+      array(number).replaceAll("\"", "")
+    } else {
+      false
+    }
+
   }
 }
