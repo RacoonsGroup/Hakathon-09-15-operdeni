@@ -35,7 +35,7 @@ class CommandService(val body: JValue) {
 
   def start(chatId: String) = ApiRequest.sendMessage(chatId,"Привет!")
   def help(chatId: String): Unit = {
-    ApiRequest.sendMessage(chatId,"help! \n  /weather <city> \n  /dice <dice quantity 1..4> \n  /devanswer \n  /quote \n  /image")
+    ApiRequest.sendMessage(chatId,"help! \n  /weather <city> \n  /dice <dice quantity 1..4> \n  /devanswer \n  /quote \n  /image <name>")
   }
 
   def weather(body: JValue): Unit = {
