@@ -1,0 +1,32 @@
+.text-center.font-size__30px.white
+  | Available chat bot commands:
+div#list
+  ol
+    li
+      p
+        em /start
+    li
+      p
+        em /help
+    li
+      p
+        em /weather {city: String}
+        | {city: String} - City name
+        br
+        | example: /weather Казань
+    li
+      p
+        em /dice {q: int}
+        | {q: int} - dice quantity from 1 to 4
+        br
+        | example: /dice 3
+    li
+      p
+        em /devanswer
+    li
+      p
+        em /quote
+    li
+      p
+        em /image {name: String}
+        | example: /image racoon

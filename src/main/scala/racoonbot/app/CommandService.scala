@@ -1,10 +1,11 @@
 package racoonbot.app
 
 import org.json4s.JsonAST.JValue
-import org.slf4j.LoggerFactory
 import org.json4s.jackson.JsonMethods._
+import org.slf4j.LoggerFactory
 import racoonbot.app.resources.DevAnswer
-import scalaj.http.{HttpRequest, HttpResponse, Http}
+
+import scalaj.http.{Http, HttpRequest}
 
 class CommandService(val body: JValue) {
   val logger = LoggerFactory.getLogger(getClass)
@@ -34,7 +35,7 @@ class CommandService(val body: JValue) {
 
   def start(chatId: String) = ApiRequest.sendMessage(chatId,"Привет!")
   def help(chatId: String): Unit = {
-    ApiRequest.sendMessage(chatId,"help! /weather <city>, /dice <dice quantity 1..4>, /devanswer, /quote")
+    ApiRequest.sendMessage(chatId,"help! \n  /weather <city> \n  /dice <dice quantity 1..4> \n  /devanswer \n  /quote \n  /image")
   }
 
   def weather(body: JValue): Unit = {

@@ -1,12 +1,14 @@
--@ val title: String
--@ val headline: String = title
 -@ val body: String
 
 !!!
 html
   head
-    title= title
+    title RacoonBot
+    link(href="css/base.css" rel="stylesheet")
   body
     #content
-      h1= headline
+      h1.title
+        | Welcome to the Telegram
+        a(href="http://telegram.me/racoon_bot") @racoon_bot
+        | api server!
       != body
